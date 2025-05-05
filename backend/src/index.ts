@@ -48,8 +48,16 @@ const connectDB = async () => {
       throw new Error('MongoDB URI not found in environment variables');
     }
     
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB connected successfully');
+    await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: 'naukri_jobs_db' 
+    });
+    
+    // Verify connection and collection
+    const db = mongoose.connection.db;
+    const collections = await db.listCollections().toArray();
+    console.log('Available collections:', collections.map(c => c.name));
+    
+    console.log('MongoDB connected successfully to naukri_jobs_db');
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);
