@@ -75,63 +75,54 @@ export const matchJobs = async (req: Request, res: Response): Promise<void> => {
     // Step 2: Filter the freshly fetched jobs based on criteria (in-memory filtering)
     console.log(`Filtering ${jobsToFilter.length} fetched jobs in memory...`);
     const filteredJobs = jobsToFilter.filter(job => {
-      let matches = true; // Assume match initially
+      let matches = true; 
 
-      // Filter for internal applications only
+      // Filter for Internal applications only
       matches = matches && job["Application Type"] === "Internal";
 
-      // Filter by location (case-insensitive)
-      if (location && typeof location === 'string' && job.Location) {
-        matches = matches && job.Location.toLowerCase().includes(location.trim().toLowerCase());
-      } else if (location && typeof location === 'string') {
-         // If location is provided but job has no location, it's not a match
-         matches = false;
-      }
-
-
-      // Filter by job title (case-insensitive)
+      // Filter by job title (case-insensitive) - This is now the primary filter
       if (jobTitle && typeof jobTitle === 'string' && job["Job Title"]) {
-        matches = matches && job["Job Title"].toLowerCase().includes(jobTitle.trim().toLowerCase());
-      } else if (jobTitle && typeof jobTitle === 'string') {
-         // If jobTitle is provided but job has no title, it's not a match
-         matches = false;
+        const searchTitle = jobTitle.trim().toLowerCase();
+        const jobTitleLower = job["Job Title"].toLowerCase();
+        const searchQueryLower = job["Search Query"]?.toLowerCase() || '';
+        
+        // Match if either the job title contains the search title OR 
+        // if the search query matches what we're looking for
+        matches = matches && (
+          jobTitleLower.includes(searchTitle) || 
+          searchQueryLower.includes(searchTitle) ||
+          searchTitle.includes(jobTitleLower) ||
+          searchTitle.includes(searchQueryLower)
+        );
       }
 
-
-      // Filter by skills (match any skill, case-insensitive)
-      if (skills && typeof skills === 'string' && job.Skills) {
-        const skillList = skills.split(',').map((s: string) => s.trim().toLowerCase()).filter(Boolean); // Ensure no empty strings
-        const jobSkills = job.Skills.toLowerCase();
-        // Only proceed if skillList is not empty
-        if (skillList.length > 0) {
-             // Check if at least one requested skill is present in the job's skills
-             matches = matches && skillList.some((skill: string) => jobSkills.includes(skill));
-        } else if (skills.trim()) {
-             // If skills string was provided but resulted in an empty list (e.g., just commas), it's not a match
-             matches = false;
+      // Optional filters - only apply if matches is still true
+      if (matches) {
+        // Filter by location (case-insensitive) if provided
+        if (location && typeof location === 'string' && job.Location) {
+          matches = matches && job.Location.toLowerCase().includes(location.trim().toLowerCase());
         }
-      } else if (skills && typeof skills === 'string') {
-         // If skills are requested but the job has no skills listed, it's not a match
-         matches = false;
-      }
 
+        // Filter by skills (match any skill, case-insensitive) if provided
+        if (matches && skills && typeof skills === 'string' && job.Skills) {
+          const skillList = skills.split(',').map((s: string) => s.trim().toLowerCase()).filter(Boolean);
+          if (skillList.length > 0) {
+            const jobSkills = job.Skills.toLowerCase();
+            matches = matches && skillList.some((skill: string) => jobSkills.includes(skill));
+          }
+        }
 
-      // Filter by experience
-      if (experience && typeof experience === 'string') {
+        // Filter by experience if provided
+        if (matches && experience && typeof experience === 'string') {
           const expValue = experience.trim();
-          // Check if either 'Search Experience' matches exactly OR 'Experience Required' includes the value
           const searchExpMatch = job["Search Experience"] === expValue;
           const expReqMatch = !!(job["Experience Required"] &&
-                               typeof job["Experience Required"] === 'string' &&
-                               job["Experience Required"].includes(expValue));
-
-          // The job must have matched one of these experience fields if experience is requested
+                             typeof job["Experience Required"] === 'string' &&
+                             job["Experience Required"].includes(expValue));
           matches = matches && (searchExpMatch || expReqMatch);
+        }
       }
-      // If experience is not provided in the request, we don't filter by it.
 
-
-      // Return the final match status for this job
       return matches;
     });
 

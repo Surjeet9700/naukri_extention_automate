@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naukri Apply Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Naukri Apply Assistant</h1>
+    
+    <div class="profile-section">
+      <h2>Active Profile</h2>
+      <div id="profileInfo"></div>
+    </div>
+
+    <div class="job-section">
+      <h2>Current Job</h2>
+      <div id="jobInfo"></div>
+    </div>
+
+    <div class="automation-section">
+      <h2>Automation Status</h2>
+      <div id="automationStatus"></div>
+    </div>
+
+    <div class="status-bar">
+      <div id="statusMessage">Ready</div>
+      <button id="closeButton">Close Assistant</button>
+    </div>
+  </div>
+  <script src="assistant.js"></script>
+</body>
+</html>

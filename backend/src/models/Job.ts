@@ -66,4 +66,42 @@ jobSchema.index({ "Job Title": 'text', "Skills": 'text', "Location": 'text' });
 // Create the Job model
 const Job = mongoose.model<IJob>('Job', jobSchema);
 
-export default Job;
+// Define the schema for AppliedJob
+const appliedJobSchema = new mongoose.Schema({
+  jobUrl: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  jobTitle: {
+    type: String,
+    required: true
+  },
+  company: {
+    type: String,
+    required: true
+  },
+  applicationStatus: {
+    type: String,
+    enum: ['pending', 'success', 'failed'],
+    default: 'pending'
+  },
+  appliedDate: {
+    type: Date,
+    default: Date.now
+  },
+  lastAttempt: {
+    type: Date,
+    default: Date.now
+  },
+  attempts: {
+    type: Number,
+    default: 1
+  },
+  error: String
+});
+
+// Create the AppliedJob model
+const AppliedJob = mongoose.model('AppliedJob', appliedJobSchema);
+
+export { Job, AppliedJob };
