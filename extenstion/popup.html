@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naukri Apply Assist</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Naukri Apply Assist</h1>
+    
+    <div class="profile-section">
+      <h2>User Profile</h2>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="skills">Skills (comma-separated):</label>
+          <input type="text" id="skills" name="skills" placeholder="e.g., JavaScript, React, Node.js">
+        </div>
+
+        <div class="form-group">
+          <label for="experience">Experience (years):</label>
+          <input type="number" id="experience" name="experience" min="0" max="30" step="0.5">
+        </div>
+
+        <div class="form-group">
+          <label for="location">Preferred Location:</label>
+          <input type="text" id="location" name="location" placeholder="e.g., Bangalore, Mumbai">
+        </div>
+
+        <div class="form-group">
+          <label for="jobTitle">Target Job Title:</label>
+          <input type="text" id="jobTitle" name="jobTitle" placeholder="e.g., Software Engineer, Data Scientist">
+        </div>
+
+        <button type="submit" id="saveProfile">Save Profile</button>
+      </form>
+    </div>
+
+    <div class="job-section">
+      <h2>Matched Jobs</h2>
+      <button id="findJobs">Find Matching Jobs</button>
+      
+      <div id="loadingContainer" class="loading" style="display: none;">
+        <div class="loading-spinner"></div>
+        <span>Searching for matching jobs...</span>
+      </div>
+      
+      <div id="jobResults">
+        <!-- Job results will be displayed here -->
+        <p class="no-jobs">No jobs found yet. Save your profile and click "Find Matching Jobs"</p>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.container {
+  width: 400px;
+  padding: 16px;
+}
+
+h1 {
+  color: #2557a7;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 20px;
+}
+
+h2 {
+  color: #333;
+  font-size: 16px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 8px;
+  margin-top: 16px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+button {
+  background-color: #2557a7;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #1a4b8f;
+}
+
+.job-section {
+  margin-top: 24px;
+}
+
+.job-card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 4px;
+}
+
+.job-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #2557a7;
+}
+
+.job-company, .job-location {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.job-apply {
+  text-align: right;
+}
+
+.no-jobs {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 16px 0;
+}
+
+#jobResults {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+
+/* Notification styles */
+.notification {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.notification.success {
+  background-color: #e6f4ea;
+  color: #137333;
+  border-left: 4px solid #34a853;
+}
+
+.notification.error {
+  background-color: #fce8e8;
+  color: #c62828;
+  border-left: 4px solid #ea4335;
+}
+
+.notification.fade-out {
+  opacity: 0;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top: 3px solid #2557a7;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

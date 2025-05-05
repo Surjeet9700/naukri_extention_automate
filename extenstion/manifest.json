@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Naukri Apply Assist",
+  "description": "Streamlines the job application process on Naukri.com using profile matching",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Naukri Apply Assist"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.naukri.com/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.naukri.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
